@@ -13,6 +13,7 @@ import {
   MdHelpCenter,
   MdLogout,
 } from "react-icons/md";
+import { auth, signOut } from "@/app/auth";
 
 
 const menuItems = [
@@ -24,19 +25,15 @@ const menuItems = [
         path: "/dashboard",
         icon: <MdDashboard />,
       },
+    
       {
-        title: "Users",
-        path: "/dashboard/users",
-        icon: <MdSupervisedUserCircle />,
-      },
-      {
-        title: "Products",
-        path: "/dashboard/products",
+        title: "Orders",
+        path: "/dashboard/orders",
         icon: <MdShoppingBag />,
       },
       {
-        title: "Transactions",
-        path: "/dashboard/transactions",
+        title: "Moves",
+        path: "/dashboard/moves",
         icon: <MdAttachMoney />,
       },
     ],
@@ -50,13 +47,13 @@ const menuItems = [
         icon: <MdWork />,
       },
       {
-        title: "Reports",
-        path: "/dashboard/reports",
+        title: "Registry",
+        path: "/dashboard/registry",
         icon: <MdAnalytics />,
       },
       {
-        title: "Teams",
-        path: "/dashboard/teams",
+        title: "Customers",
+        path: "/dashboard/customers",
         icon: <MdPeople />,
       },
     ],
@@ -64,6 +61,11 @@ const menuItems = [
   {
     title: "User",
     list: [
+      {
+        title: "Users",
+        path: "/dashboard/users",
+        icon: <MdSupervisedUserCircle />,
+      },
       {
         title: "Settings",
         path: "/dashboard/settings",
@@ -77,20 +79,21 @@ const menuItems = [
     ],
   },
 ];
-const Sidebar = () => {
+const Sidebar = async () => {
+  const {user} = await auth();
   return (
     <div className={styles.container}>
       <div className={styles.user}>
         <Image
           className={styles.userImage}
-          src='/noavatar.png'
+          src={ user.img || '/noavatar.png'}
           alt=""
           width="50"
           height="50"
         />
         <div className={styles.userDetail}>
-          <span className={styles.username}>{}</span>
-          <span className={styles.userTitle}>Administrator</span>
+          <span className={styles.username}>{user.username}</span>
+          <span className={styles.userTitle}>{user.role}</span>
         </div>
       </div>
       <ul className={styles.list}>
@@ -104,10 +107,10 @@ const Sidebar = () => {
         ))}
       </ul>
       <form
-        // action={async () => {
-        //   "use server";
-        //   await signOut();
-        // }}
+        action={async () => {
+          "use server";
+          await signOut();
+        }}
       >
         <button className={styles.logout}>
           <MdLogout />
