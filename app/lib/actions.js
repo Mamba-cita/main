@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import {  User } from "./models";
+import {  Customer, User } from "./models";
 import { connectToDB } from "./utils";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
@@ -84,6 +84,82 @@ export const deleteUser = async (formData) => {
 
   revalidatePath("/dashboard/products");
 };
+
+
+//customer
+
+export const addCustomer = async (formData) => {
+  const { name, email, phone, city, country, account, isActive } = Object.fromEntries(formData);
+
+  try {
+    await connectToDB();
+    const newCustomer = new Customer({
+      name,
+      email,
+      phone,
+      city,
+      country,
+      account,
+      isActive: isActive === "true" ? true : false,
+    });
+    await newCustomer.save();
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to create customer!");
+  }
+
+  // Revalidate and redirect
+  revalidatePath("/dashboard/customers");
+  redirect("/dashboard/customers");
+};
+
+export const updateCustomer = async (formData) => {
+  const { id, name, email, phone, city, country, account, isActive } = Object.fromEntries(formData);
+
+  try {
+    await connectToDB();
+
+    const updateFields = {
+      name,
+      email,
+      phone,
+      city,
+      country,
+      account,
+      isActive,
+    };
+
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]
+    );
+
+    await Customer.findByIdAndUpdate(id, updateFields);
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to update customer!");
+  }
+
+  revalidatePath("/dashboard/customers");
+  redirect("/dashboard/customers");
+};
+
+export const deleteCustomer = async (formData) => {
+  const { id } = Object.fromEntries(formData);
+
+  try {
+    await connectToDB();
+    await Customer.findByIdAndDelete(id);
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to delete customer!");
+  }
+
+  revalidatePath("/dashboard/customers");
+};
+
+// The existing authenticate function remains unchanged
+
 
 export const authenticate = async (prevState, formData) => {
   const { username, password } = Object.fromEntries(formData);

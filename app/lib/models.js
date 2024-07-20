@@ -36,35 +36,35 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const CustomerSchema = new mongoose.Schema(
+const customerSchema = new mongoose.Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true,
       unique: true,
     },
-    desc: {
+    email: {
       type: String,
       required: true,
+      unique: true,
     },
-    price: {
+    phone: {
       type: Number,
       required: true,
       min: 0,
     },
-    stock: {
-      type: Number,
-      required: true,
-      min: 0,
-    },
-    img: {
+    city: {
       type: String,
     },
-    color: {
+    country: {
       type: String,
     },
-    size: {
+    account: {
       type: String,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }
@@ -72,4 +72,4 @@ const CustomerSchema = new mongoose.Schema(
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);
 export const Customer =
-  mongoose.models.Customer || mongoose.model("Customer", CustomerSchema);
+  mongoose.models.Customer || mongoose.model("Customer", customerSchema);

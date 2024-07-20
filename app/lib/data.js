@@ -31,16 +31,16 @@ export const fetchUser = async (id) => {
   }
 };
 
-export const fetchCustomers= async (q, page) => {
-  console.log(q);
+
+export const fetchCustomers = async (q, page) => {
   const regex = new RegExp(q, "i");
 
   const ITEM_PER_PAGE = 2;
 
   try {
     connectToDB();
-    const count = await Customer.find({ title: { $regex: regex } }).count();
-    const customers = await Customer.find({ title: { $regex: regex } })
+    const count = await Customer.countDocuments({ name: { $regex: regex } });
+    const customers = await Customer.find({ name: { $regex: regex } })
       .limit(ITEM_PER_PAGE)
       .skip(ITEM_PER_PAGE * (page - 1));
     return { count, customers };
