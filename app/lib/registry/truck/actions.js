@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { connectToDB } from "../../utils";
 import Truck from '../../models';
+import { revalidatePath } from "next/cache";
+
 
 export const addTruck = async (formData) => {
   const { truck_reg, make, year, transporter } = Object.fromEntries(formData);

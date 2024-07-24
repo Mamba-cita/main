@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { connectToDB } from "../../utils";
 import Trailer from '../../models';
+import { revalidatePath } from "next/cache";
+
 
 export const addTrailer = async (formData) => {
   const { trailer_reg, trailer_type, ton, year, transporter } = Object.fromEntries(formData);

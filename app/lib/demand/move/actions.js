@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { connectToDB } from "../../utils";
 import Driver from '../../models';
+import { revalidatePath } from "next/cache";
+
 
 
 export const addDriver = async (formData) => {
