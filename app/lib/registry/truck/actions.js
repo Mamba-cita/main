@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { connectToDB } from "../../utils";
 import Truck from '../../models';
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 
 export const addTruck = async (formData) => {
