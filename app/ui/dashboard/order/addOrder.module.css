@@ -1,0 +1,68 @@
+.container {
+  background-color: var(--bgSoft);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds shadow for depth */
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Automatically adjust to fit items */
+  gap: 20px; /* Adds spacing between form elements */
+}
+
+.form input,
+.form textarea,
+.form select {
+  padding: 12px;
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid #2e374a;
+  border-radius: 5px;
+  font-size: 16px; /* Adjust font size for better readability */
+}
+
+.form textarea {
+  grid-column: span 3; /* Make textarea span the full width of the grid */
+  resize: vertical; /* Allows resizing only vertically */
+}
+
+.form button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--text);
+  background-color: teal;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancelButton, .submitButton {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.cancelButton {
+  background-color: red; /* Change to your preferred color */
+  text-align: center;
+  text-decoration: none; /* Removes underline */
+}
+
+.submitButton {
+  background-color: teal; /* Change to your preferred color */
+}
+@media (max-width: 600px) {
+  .form {
+    grid-template-columns: 1fr; /* Stack inputs in a single column on smaller screens */
+  }
+}

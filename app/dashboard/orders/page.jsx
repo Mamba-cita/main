@@ -1,19 +1,23 @@
+import React from 'react';
+import { fetchOrders } from '@/app/lib/data';
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
 import styles from "@/app/ui/dashboard/customers/customers.module.css";
 import Link from "next/link";
-import { deleteCustomer } from "@/app/lib/actions";
-import { fetchCustomers } from "@/app/lib/data";
+import { deleteOrder } from '@/app/lib/demand/order/actions';
 
-const Customers = async ({searchParams}) => {
+const Orders = async ({ searchParams }) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || 1;
-  const { count, customers } = await fetchCustomers(q, page);
+
+  // Fetch orders
+  const { count, orders } = await fetchOrders(q, page);
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for a customer..." />
-        <Link href="/dashboard/customers/add">
+        <Search placeholder="Search for an order..." />
+        <Link href="/dashboard/orders/add">
           <button className={styles.addButton}>Add New</button>
         </Link>
       </div>
@@ -21,36 +25,40 @@ const Customers = async ({searchParams}) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Phone Number</td>
-            <td>Country</td>
-            <td>Created At</td>
+            <td>Order No.</td>
+            <td>Client</td>
+            <td>Origin</td>
+            <td>Destination</td>
+            <td>Workflow</td>
+            <td>Rate</td>
+            <td>Container</td>
+            <td>Empty Return</td>
             <td>Status</td>
+            <td>Created At</td>
             <td>Action</td>
           </tr>
         </thead>
         <tbody>
-          {customers.map(customer => (
-            <tr key={customer._id}>
-              <td>{customer.name}</td>
-              <td>{customer.email}</td>
-              <td>{customer.phone}</td>
-              <td>{customer.country}</td>
-              <td>{new Date(customer.createdAt).toLocaleDateString()}</td>
-              <td>{customer.isActive ? 'Active' : 'Inactive'}</td>
+          {orders.map(order => (
+            <tr key={order._id}>
+              <td>{order.order_number}</td>
+              <td>{order.client.name}</td>
+              <td>{order.origin.depo_name}</td>
+              <td>{order.des.depo_name}</td>
+              <td>{order.workflow}</td>
+              <td>{order.cargo_rate}</td>
+              <td>{order.cont_no}</td>
+              <td>{order.des.depo_name}</td>
+              <td>{order.status}</td>
+              <td>{new Date(order.createdAt).toLocaleDateString()}</td>
               <td>
                 <div className={styles.buttons}>
-                  <Link href={`/dashboard/customers/${customer.id}`}>
-                    <button className={`${styles.button} ${styles.view}`}>
-                      View
-                    </button>
+                  <Link href={`/dashboard/orders/${order.id}`}>
+                    <button className={`${styles.button} ${styles.view}`}>View</button>
                   </Link>
-                  <form action={deleteCustomer}>
-                    <input type="hidden" name="id" value={(customer.id)} />
-                    <button className={`${styles.button} ${styles.delete}`}>
-                      Delete
-                    </button>
+                  <form action={deleteOrder}>
+                    <input type="hidden" name="id" value={order.id} />
+                    <button className={`${styles.button} ${styles.delete}`}>Delete</button>
                   </form>
                 </div>
               </td>
@@ -59,9 +67,8 @@ const Customers = async ({searchParams}) => {
         </tbody>
       </table>
       <Pagination count={count} />
-
     </div>
   );
 };
 
-export default Customers;
+export default Orders;

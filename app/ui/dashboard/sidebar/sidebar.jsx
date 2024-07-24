@@ -36,6 +36,16 @@ const menuItems = [
         path: "/dashboard/moves",
         icon: <MdAttachMoney />,
       },
+      {
+        title: "Fuel",
+        path: "/dashboard/fuel",
+        icon: <MdAttachMoney />,
+      },
+      {
+        title: "Trip Expenses",
+        path: "/dashboard/trip",
+        icon: <MdAttachMoney />,
+      },
     ],
   },
   {
@@ -47,13 +57,43 @@ const menuItems = [
         icon: <MdWork />,
       },
       {
-        title: "Registry",
-        path: "/dashboard/registry",
+        title: "Invoices",
+        path: "/dashboard/invoices",
         icon: <MdAnalytics />,
       },
       {
+        title: "Reports",
+        path: "/dashboard/reports",
+        icon: <MdPeople />,
+      },
+    ],
+  },
+  {
+    title: "Registry",
+    list: [
+      {
         title: "Customers",
         path: "/dashboard/customers",
+        icon: <MdPeople />,
+      },
+      {
+        title: "Truck",
+        path: "/dashboard/truck",
+        icon: <MdWork />,
+      },
+      {
+        title: "Trailer",
+        path: "/dashboard/trailer",
+        icon: <MdAnalytics />,
+      },
+      {
+        title: "Driver",
+        path: "/dashboard/driver",
+        icon: <MdPeople />,
+      },
+      {
+        title: "Locations",
+        path: "/dashboard/location",
         icon: <MdPeople />,
       },
     ],
